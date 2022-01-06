@@ -312,3 +312,61 @@ btnSort.addEventListener('click', function(e) {
 //     .map(mov => mov * eurToUsd)
 //     .reduce((acc, mov) => acc + mov, 0);
 // console.log(totalDepositsUSD);
+
+
+const bankDepositSum = accounts
+    .flatMap(acc => acc.movements) // accounts.map(acc => acc.movements).flat(); <- map un flat apvienots
+    .filter(mov => mov > 0)
+    .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSum);
+
+// coding challange #4
+
+const dogs = [
+    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+    { weight: 8, curFood: 200, owners: ['Matilda'] },
+    { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+    { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// 1.
+dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28)));
+
+// 2.
+const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(`Sarah's dog is eating too ${dogSarah.curFood > dogSarah.recFood ? 'much' : 'little'}`)
+
+// 3.
+const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recFood).flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs.filter(dog => dog.curFood < dog.recFood).flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+// 4.
+// "Matilda and Alice and Bob's dogs eat too much!"
+// and "Sarah and John and Michael's dogs eat too little!
+console.log(`${ownersEatTooMuch.join(`'s and `)}'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+
+// 5.
+console.log(dogs.some(dog => dog.curFood === dog.recFood));
+
+// 6.
+// Being within a range 10% above and below the recommended portion means:
+// current > (recommended * 0.90) && current < (recommended *
+// 1.10). Basically, the current portion should be between 90% and 110% of the
+// recommended portion.
+console.log(dogs.some(dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.10));
+
+// 7.
+const ownersEatGood = dogs
+.filter(dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.10)
+.flatMap(dog => dog.owners);
+
+console.log(`${ownersEatGood.join(' and ')}'s dogs eat Good`);
+
+// 8.
+const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+console.log(dogsSorted)
