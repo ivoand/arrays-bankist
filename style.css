@@ -322,3 +322,10 @@ h2 {
     color: rgb(51, 255, 0);
     transition: all 1.5s;
 }
+
+pre {
+    float: right;
+    padding: 0 2rem;
+    margin-right: 139px;
+    font-size: 14px;
+}
